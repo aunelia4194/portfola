@@ -1,0 +1,79 @@
+/* Fond étoilé (petites étoiles scintillantes) */
+.stars {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background-color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  animation: twinkle 10s infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { transform: scale(1); opacity: 0; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Étoile filante */
+/* Étoile filante (tête à gauche, traînée à droite) */
+.shooting-star {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent);
+  position: absolute;
+  z-index: 1;
+  transform: rotate(215deg);
+  animation: shooting-star 4s linear infinite;
+  opacity: 0;
+  border-radius: 1px;
+}
+
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(200,180,255,0.4);
+}
+
+@keyframes shooting-star {
+  0% { opacity: 0; transform: rotate(215deg) translateX(0); }
+  5% { opacity: 1; }
+  40% { opacity: 1; transform: rotate(215deg) translateX(-400px); }
+  50% { opacity: 0; transform: rotate(215deg) translateX(-450px); }
+  100% { opacity: 0; transform: rotate(215deg) translateX(-450px); }
+}
+
+/* Étoile filante gauche (tête à droite, traînée à gauche) */
+.shooting-star-left {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+  transform: rotate(145deg);
+  animation: shooting-star-left 4s linear infinite;
+}
+
+.shooting-star-left::before {
+  left: auto;
+  right: -3px;
+}
+
+@keyframes shooting-star-left {
+  0% { opacity: 0; transform: rotate(145deg) translateX(0); }
+  5% { opacity: 1; }
+  40% { opacity: 1; transform: rotate(145deg) translateX(400px); }
+  50% { opacity: 0; transform: rotate(145deg) translateX(450px); }
+  100% { opacity: 0; transform: rotate(145deg) translateX(450px); }
+}   

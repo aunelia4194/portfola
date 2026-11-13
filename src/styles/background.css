@@ -1,0 +1,29 @@
+/* Thème clair */
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: linear-gradient(
+    180deg,
+    #1765C0 0%,
+    #258FE5 50%,
+    #43BDF3 100%
+  );
+  background-attachment: fixed;
+}
+
+/* Thème sombre */
+html.dark,
+html.dark body {
+  background: linear-gradient(
+    180deg,
+    #050D1B 0%,
+    #10213B 50%,
+    #263B5C 100%
+  );
+  background-attachment: fixed;
+  
+  /* Surcharge des variables pour le mode nuit */
+  --cv-bg-start: #030712;
+  --cv-bg-end: #112240;
+}

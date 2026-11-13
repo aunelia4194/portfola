@@ -1,0 +1,138 @@
+/* --- Version JOUR (Éclipse Solaire Texturée) --- */
+.eclipse {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  
+  /* --- LE TRUC VISUEL MAGIQUE --- */
+  /* On superpose 3 ombres différentes pour casser le côté "rond parfait" */
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.9),   /* Épaisseur 1 : Lueur blanche pure très près du bord */
+    0 0 40px rgba(253, 244, 215, 0.75),  /* Épaisseur 2 : Halo moyen qui commence à s'étaler */
+    0 4px 60px rgba(219, 234, 254, 0.6);  /* Épaisseur 3 : Grosse diffusion qui tire un peu vers le bas (0 4px...) pour donner du volume */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.7s ease;
+}
+
+
+/* --- Version NUIT (Cercle Flouté + Grosse Lueur Éclipse Orange) --- */
+.dark .eclipse {
+  border-color: #ffa500;
+  
+  /* Le centre reste transparent et floute la galaxie */
+  background: rgba(9, 13, 22, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  /* LA LUEUR EXTÉRIEURE (Le gros halo de l'éclipse totale) */
+  box-shadow: 0 0 40px rgba(255, 165, 0, 0.8); 
+}
+
+.neontete {
+  font-size: 70px;
+  color: #fff;
+  font-family: "Sacramento", cursive;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 0 2px #fff, 0 0 6px #fbbf24, 0 0 12px #fbbf24;
+  transition: all 0.7s ease;
+
+  /* --- LES AJUSTEMENTS DE CENTRAGE COMBINÉS --- */
+  /* -3px pour le recentrer à gauche, -4px pour le remonter légèrement */
+  transform: translateX(-3px) translateY(-4px); 
+}
+
+/* N'oublie pas de mettre exactement la même chose pour la version dark */
+.dark .neontete {
+  color: #fff6a9;
+  text-shadow: 0 0 2px #fff6a9, 0 0 6px #ffa500, 0 0 12px #ffa500;
+  
+  /* On applique le même combo ici */
+  transform: translateX(-3px) translateY(-4px); 
+}
+
+
+
+.hero-separator { /* Ajoute ou cible la div qui contient l'icône étoile */
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+.neon-button {
+  position: relative;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  background: transparent;
+  color: white; 
+  border: none;
+  cursor: pointer;
+  isolation: isolate;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: transform 0.25s ease;
+}
+
+.dark .neon-button {
+  color: white;
+}
+
+.neon-button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Halo du JOUR (Pur dégradé violet-rose, sans halo blanc) */
+.neon-button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #5ecbff, #7c83ff, #b875d1, #e58a79);
+  filter: blur(8px);
+  opacity: 0.75;
+  z-index: -1;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.neon-button:hover::before {
+  opacity: 0.98;
+  filter: blur(10px);
+}
+
+/* Halo de la NUIT (Pur dégradé doré-orangé) */
+.dark .neon-button::before {
+  background: linear-gradient(90deg, #fbbf24, #fb923c, #ea580c);
+  opacity: 0.85;
+  filter: blur(10px);
+}
+
+.dark .neon-button:hover::before {
+  opacity: 1;
+  filter: blur(12px);
+}
+
+
+
+/* Supprime l'ancien .dynamic-hero-group et mets ça à la place */
+
+.hero-content-wrapper {
+  /* On décale tout le bloc de 80 pixels vers le haut par rapport au centre de l'écran */
+  transform: translateY(-80px); 
+  /* On s'assure que le flexbox ne cherche pas à étirer le contenu verticalement */
+  justify-content: center !important; 
+}
+
+/* Si ton écran est vraiment petit en hauteur (ex: ordi portable 13 pouces) */
+@media (max-height: 750px) {
+  .hero-content-wrapper {
+    transform: translateY(-110px); /* On remonte encore un peu plus si besoin */
+  }
+}

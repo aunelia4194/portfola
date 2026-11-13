@@ -1,0 +1,287 @@
+
+
+:root {
+  --slide-ease: cubic-bezier(0.4, -0.3, 0.6, 1.3);
+  --easing: var(--slide-ease);
+  --speed: 0.5s;
+  --width: clamp(140px, 18vw, 220px);
+  --ar: 8 / 3;
+  --ray: hsl(0 0% 100% / 0.5);
+  --sun: hsl(47, 91%, 58%);
+  --moon: hsl(212, 13%, 82%);
+  --crater: hsl(221, 16%, 68%);
+  --fly-speed: 10s;
+}
+
+.toggle__backdrop:first-of-type .clouds path:first-of-type {
+  fill: var(--ray);
+}
+
+.toggle {
+  -webkit-tap-highlight-color: transparent;
+  width: var(--width);
+  z-index: 10;
+  will-change: transform;
+  isolation: isolate;
+  transform: translate3d(0, 0, 0);
+  aspect-ratio: var(--ar);
+  border-radius: 100vh;
+  border: 0;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background var(--speed) var(--easing);
+  /* Force le lissage des bords arrondis sur les navigateurs webkit */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  background: hsl(
+    calc(204 + (var(--dark, 0) * 25)) calc((53 - (var(--dark, 0) * 28)) * 1%)
+      calc((47 - (var(--dark, 0) * 31)) * 1%)
+  );
+  box-shadow: calc(var(--width) * 0) calc(var(--width) * 0.02)
+      calc(var(--width) * 0.01) calc(var(--width) * -0.0025)
+      hsl(210 10% 100% / 0.95),
+    calc(var(--width) * 0) calc(var(--width) * -0.02) calc(var(--width) * 0.01)
+      calc(var(--width) * -0.0025) hsl(210 10% 10% / 0.2),
+    calc(var(--width) * 0) calc(var(--width) * 0.02) calc(var(--width) * 0.5) 0
+      hsl(210 10% 100% / 0.15);
+}
+
+.toggle:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: calc(var(--width) * 0) calc(var(--width) * -0.025)
+      calc(var(--width) * 0.025) 0 hsl(210 10% 10% / 0.15) inset,
+    calc(var(--width) * 0) calc(var(--width) * 0.025) calc(var(--width) * 0.025)
+      0 hsl(210 10% 10% / 0.65) inset;
+  border-radius: 100vh;
+}
+
+.toggle__content {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 100vh;
+  display: block;
+  clip-path: inset(0 0 0 0 round 100vh);
+}
+
+.toggle__backdrop {
+  overflow: visible !important;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  transition: translate var(--speed) var(--easing);
+  translate: 0 calc(var(--dark, 0) * (100% - (3 / 8 * var(--width))));
+}
+
+.stars path {
+  transform-box: fill-box;
+  transform-origin: 25% 50%;
+  scale: calc(0.25 + (var(--dark, 0) * 0.75));
+  transition: scale var(--speed) calc(var(--speed) * 0.5) var(--easing);
+}
+
+.stars g {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.stars g:nth-of-type(3) { animation: twinkle 4s -2s infinite; }
+.stars g:nth-of-type(11) { animation: twinkle 6s -2s infinite; }
+.stars g:nth-of-type(9) { animation: twinkle 4s -1s infinite; }
+
+@keyframes twinkle {
+  0%, 40%, 60%, 100% { transform: scale(1); }
+  50% { transform: scale(0); }
+}
+
+.toggle__indicator-wrapper {
+  position: absolute;
+  inset: 0;
+  transition: translate var(--speed) var(--slide-ease);
+  translate: calc(var(--dark, 0) * (var(--width) - (3 / 8 * var(--width)))) 0;
+}
+
+.toggle__indicator {
+  height: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 3%;
+}
+
+.toggle__star {
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  transition: translate var(--speed) var(--easing);
+  translate: calc((var(--dark, 0) * -10%) + 5%) 0;
+}
+
+.sun {
+  background: var(--sun);
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: calc(var(--width) * 0.01) calc(var(--width) * 0.01)
+      calc(var(--width) * 0.02) 0 hsl(210 10% 100% / 0.95) inset,
+    calc(var(--width) * -0.01) calc(var(--width) * -0.01)
+      calc(var(--width) * 0.02) 0 hsl(210 10% 20% / 0.5) inset;
+}
+
+.moon {
+  position: absolute;
+  inset: -1%;
+  border-radius: 50%;
+  background: var(--moon);
+  overflow: hidden; /* Important pour cacher le lapin quand il redescend */
+  transition: translate var(--speed) ease-in-out;
+  translate: calc((100 - (var(--dark, 0) * 100)) * 1%) 0%;
+  box-shadow: calc(var(--width) * 0.01) calc(var(--width) * 0.01)
+      calc(var(--width) * 0.02) 0 hsl(210 10% 100% / 0.95) inset,
+    calc(var(--width) * -0.01) calc(var(--width) * -0.01)
+      calc(var(--width) * 0.02) 0 hsl(210 10% 10% / 0.95) inset;
+}
+
+.moon__crater {
+  position: absolute;
+  background: var(--crater);
+  border-radius: 50%;
+  width: calc(var(--size, 10) * 1%);
+  aspect-ratio: 1;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  box-shadow: calc(var(--width) * 0.01) calc(var(--width) * 0.01)
+      calc(var(--width) * 0.01) 0 hsl(210 10% 6% / 0.25) inset,
+    0 calc(var(--width) * 0.005) calc(var(--width) * 0.01) 0
+      hsl(210 10% 100% / 0.25);
+}
+
+.moon__crater:nth-of-type(1) { --size: 18; --x: 40; --y: 15; }
+.moon__crater:nth-of-type(2) { --size: 20; --x: 65; --y: 58; }
+.moon__crater:nth-of-type(3) { --size: 34; --x: 18; --y: 40; }
+
+/* ANNEAUX / HALOS CONCENTRIQUES (RINGS) */
+.toggle__star:before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 356%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: background var(--speed) var(--easing);
+  background: radial-gradient(
+      circle at center,
+      transparent 0%,
+      transparent 28%,
+      rgba(255, 255, 255, 0.25) 28.5%,
+      rgba(255, 255, 255, 0.25) 43%,
+      transparent 43.5%,
+      transparent 58%,
+      rgba(255, 255, 255, 0.15) 58.5%,
+      rgba(255, 255, 255, 0.15) 75%,
+      transparent 75.5%
+    );
+}
+
+[aria-pressed="true"] .toggle__star:before {
+  background: radial-gradient(
+      circle at center,
+      transparent 0%,
+      transparent 28%,
+      rgba(255, 255, 255, 0.18) 28.5%,
+      rgba(255, 255, 255, 0.18) 43%,
+      transparent 43.5%,
+      transparent 58%,
+      rgba(255, 255, 255, 0.08) 58.5%,
+      rgba(255, 255, 255, 0.08) 75%,
+      transparent 75.5%
+    );
+}
+
+/* SUN WUKONG (MODE JOUR) */
+.wukong__container {
+  position: absolute;
+  overflow: hidden;
+  inset: 0;
+  clip-path: inset(0 0 0 0);
+  opacity: calc(1 - var(--dark, 0));
+  translate: 0 calc(var(--dark, 0) * 200%);
+  transition: opacity var(--speed) var(--easing),
+    translate var(--speed) var(--easing);
+}
+
+.wukong-flyer {
+  width: 22%;
+  position: absolute;
+  top: 65%;
+  left: 100%;
+  transition: translate
+    calc(
+      var(--speed) +
+        ((1 - var(--dark, 0)) * ((var(--fly-speed) * 0.5) - var(--speed)))
+    )
+    calc((var(--fly-speed) * 0.5) * ((1 - var(--dark, 0)) * 0.4)) linear;
+  translate: calc((0 - (1 - var(--dark, 0))) * (var(--width) + 100%))
+    calc((0 - (1 - var(--dark, 0))) * (200%));
+}
+
+.wukong-svg {
+  animation: wukong-ride 3s infinite ease-in-out;
+}
+
+@keyframes wukong-ride {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12%) rotate(-5deg); }
+}
+
+/* LAPIN PEEK-A-BOO SUR LA LUNE (MODE NUIT) */
+/* LAPIN PEEK-A-BOO SUR LA LUNE (MODE NUIT) */
+.moon-rabbit {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 55%;
+  transform: translateX(-50%) translateY(100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+[aria-pressed="true"] .moon-rabbit {
+  /* Remplace 'infinite' par '1 forwards' */
+  animation: moon-rabbit-peek 5s 1 forwards ease-in-out;
+}
+
+@keyframes moon-rabbit-peek {
+  0%, 100% {
+    transform: translateX(-50%) translateY(100%);
+  }
+  20%, 75% {
+    transform: translateX(-50%) translateY(-25%);
+  }
+  35% {
+    transform: translateX(-50%) translateY(-25%) rotate(-6deg);
+  }
+  55% {
+    transform: translateX(-50%) translateY(-25%) rotate(6deg);
+  }
+  88% {
+    transform: translateX(-50%) translateY(100%);
+  }
+}
+
+[aria-pressed="true"] {
+  --dark: 1;
+}
+
+/* Par défaut sur TOUTES les pages (Version Grande avec Lapin et Wukong) */
+.toggle {
+  --width: 140px; /* Taille idéale pour remplir les pages vides */
+}

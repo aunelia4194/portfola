@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@import "../styles/background.css";
+@import "../styles/stars.css";
+@import "../styles/hero.css";
+@import "../styles/togle.css";
+
+@variant dark (&:where(.dark, .dark *));
+
+
+/* 3. Centralisation des conteneurs de tes pages de contenu */
+@utility page-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: var(--max-width-portfolio);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+
+  @media (min-width: 640px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  @media (min-width: 768px) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  @media (min-width: 1024px) {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+
