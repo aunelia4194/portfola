@@ -56,7 +56,7 @@ function PinguButton() {
       href="/" 
       className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-[#1765C0] hover:bg-sky-100 hover:scale-105 active:scale-95 shadow-lg dark:bg-amber-400 dark:text-[#050D1B] dark:hover:bg-amber-300 font-serif group"
     >
-      ← Retourner à l'univers 
+      ← Retourner à l'accueil
       <span className="inline-block transition-transform group-hover:animate-bounce">🐧</span>
     </Link>
   );
