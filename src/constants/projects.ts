@@ -42,3 +42,11 @@ export const PROJECTS_DATA: Project[] = [
     link: "#",
   },
 ];
+
+export const PROJECT_FILTERS = [
+  { id: "all", label: "Tous" },
+  { id: "crsa", label: "CRSA" },
+  { id: "web", label: "Web" },
+  { id: "design", label: "Design" },
+  { id: "communication", label: "Communication" },
+];

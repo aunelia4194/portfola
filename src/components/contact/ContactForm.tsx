@@ -1,17 +1,13 @@
-import { CONTACT_INFO } from "@/src/constants/contact";
 import React from "react";
-
-interface ContactFormProps {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  isSubmitting: boolean;
-  isSuccess: boolean;
-  onResetSuccess: () => void;
-}
+import { CONTACT_INFO } from "@/src/constants/contact";
+import { THEME_STYLES } from "@/src/constants/theme";
+import { ContactFormProps } from "@/src/types/contact";
 
 export default function ContactForm({
   onSubmit,
   isSubmitting,
   isSuccess,
+  errorMessage,
   onResetSuccess,
 }: ContactFormProps) {
   const { form } = CONTACT_INFO;
@@ -43,7 +39,7 @@ export default function ContactForm({
           <button
             type="button"
             onClick={onResetSuccess}
-            className="mt-4 text-xs font-bold text-white hover:text-[#ffb7c5] dark:text-amber-400 dark:hover:text-orange-400 underline transition-colors cursor-pointer"
+            className={`mt-4 text-xs font-bold ${THEME_STYLES.accentLink} cursor-pointer`}
           >
             {form.successButton}
           </button>
@@ -63,6 +59,7 @@ export default function ContactForm({
                 placeholder={form.placeholderName}
               />
             </div>
+
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-white mb-2">
                 {form.labelEmail}
@@ -102,6 +99,7 @@ export default function ContactForm({
                 stroke="currentColor"
                 strokeWidth="2.5"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -124,6 +122,13 @@ export default function ContactForm({
               placeholder={form.placeholderMessage}
             />
           </div>
+
+          {/* Alerte en cas d'erreur d'envoi */}
+          {errorMessage && (
+            <div className="p-3.5 rounded-xl bg-rose-500/20 border border-rose-400/50 text-xs font-medium text-white">
+              {errorMessage}
+            </div>
+          )}
 
           <div className="flex justify-end pt-2">
             <button

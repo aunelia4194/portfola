@@ -1,4 +1,3 @@
-import React from "react";
 
 interface SvgProps extends React.SVGAttributes<SVGElement> {
   className?: string;

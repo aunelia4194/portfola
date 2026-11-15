@@ -1,14 +1,9 @@
 "use client";
 
-import React from "react";
 import CrsaLabel from "@/src/components/ui/CrsaLabel";
 import { ABOUT_INFO } from "@/src/constants/about";
+import { AboutHeroProps } from "@/src/types/about";
 
-interface AboutHeroProps {
-  avatarUrl: string;
-  name: string;
-  description: string;
-}
 
 export default function AboutHero({ avatarUrl, name, description }: AboutHeroProps) {
   const { diplomaDetails } = ABOUT_INFO;
@@ -49,17 +44,16 @@ export default function AboutHero({ avatarUrl, name, description }: AboutHeroPro
 
       {/* Le Bloc Focus explicatif sous la photo et la présentation */}
       <div className="glass-panel w-full text-left p-6 bg-white/5 dark:bg-slate-950/40 border border-white/10 dark:border-blue-900/30 rounded-2xl shadow-lg space-y-3">
-                <div className="flex items-center gap-2.5">
-          <svg className="w-5 h-5 text-cyan-300 dark:text-amber-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <div className="flex items-center gap-2.5">
+          <svg className="w-5 h-5 text-[#ffb7c5] dark:text-amber-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <circle cx="12" cy="12" r="3" />
           </svg>
-          <h4 className="text-sm font-bold uppercase tracking-wider text-white dark:text-amber-400">
+          <h4 className="text-sm font-bold uppercase tracking-wider text-[#ffb7c5] dark:text-amber-400">
             {diplomaDetails.title}
           </h4>
         </div>
 
-        
         <p className="text-sm md:text-base text-white leading-relaxed">
           {diplomaDetails.definition}
         </p>
@@ -73,7 +67,7 @@ export default function AboutHero({ avatarUrl, name, description }: AboutHeroPro
             href={diplomaDetails.onisepUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-sky-200 dark:text-amber-400 dark:hover:text-amber-300 underline transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#ffb7c5] hover:text-white dark:text-amber-400 dark:hover:text-amber-300 underline transition-colors"
           >
             {diplomaDetails.onisepLabel}
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { PROFILE_INFO } from "../constants/profile";
+import React, { useState } from "react";
+import { PROFILE_INFO } from "@/src/constants/profile";
 
 export function useContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,8 +13,7 @@ export function useContactForm() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    
-    // Utilise la variable d'environnement configurée dans .env.local
+
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
     formData.append("access_key", accessKey);
 
@@ -30,10 +29,14 @@ export function useContactForm() {
         setIsSuccess(true);
         form.reset();
       } else {
-        setErrorMessage("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+        setErrorMessage(
+          "Une erreur est survenue lors de l'envoi. Veuillez réessayer."
+        );
       }
     } catch {
-      setErrorMessage("Impossible de joindre le serveur. Vérifiez votre connexion.");
+      setErrorMessage(
+        "Impossible de joindre le serveur. Vérifiez votre connexion."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -48,5 +51,6 @@ export function useContactForm() {
     emailUser: PROFILE_INFO.emailUser,
     emailDomain: PROFILE_INFO.emailDomain,
     linkedinUrl: PROFILE_INFO.linkedinUrl,
+    discordUsername: PROFILE_INFO.discordUsername,
   };
 }

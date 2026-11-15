@@ -1,9 +1,6 @@
+import { BackLinkProps } from "@/src/types/ui";
 import Link from "next/link";
 
-interface BackLinkProps {
-  href?: string;
-  label?: string;
-}
 
 export default function BackLink({
   href = "/",

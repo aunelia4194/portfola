@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
-// 1. L'interface pour que TypeScript comprenne la structure des pétales
 interface IPetal {
   x: number;
   y: number;
@@ -23,8 +22,6 @@ interface IPetal {
 export default function Sakura() {
   const { resolvedTheme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  
-  // 2. Sécurité indispensable pour Next.js (SSR)
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -32,7 +29,7 @@ export default function Sakura() {
   }, []);
 
   useEffect(() => {
-    // Si la page n'est pas chargée ou qu'on n'est pas en mode clair, on ne fait rien
+    // Active l'animation uniquement côté client et en mode clair
     if (!mounted || resolvedTheme !== "light") return;
 
     const canvas = canvasRef.current;
@@ -52,10 +49,8 @@ export default function Sakura() {
     resizeCanvas();
 
     const petalCount = 8;
-    // Utilisation du bon type d'interface pour le tableau
     const petals: IPetal[] = [];
 
-    // La classe respecte l'interface IPetal
     class Petal implements IPetal {
       x!: number;
       y!: number;
@@ -75,17 +70,22 @@ export default function Sakura() {
       reset(startIndex = -1) {
         this.originCorner = Math.random() > 0.5 ? "left" : "right";
 
-        // Remplacement de canvas! par des valeurs sûres pour éviter les crashs
         const currentWidth = canvas?.width ?? window.innerWidth;
         const currentHeight = canvas?.height ?? window.innerHeight;
 
         if (this.originCorner === "left") {
           this.x = Math.random() * 50 - 20;
-          this.y = startIndex >= 0 ? -(startIndex * (currentHeight / petalCount)) - 20 : Math.random() * 50 - 20;
+          this.y =
+            startIndex >= 0
+              ? -(startIndex * (currentHeight / petalCount)) - 20
+              : Math.random() * 50 - 20;
           this.speedX = Math.random() * 1.0 + 0.8;
         } else {
           this.x = currentWidth - Math.random() * 50 + 20;
-          this.y = startIndex >= 0 ? -(startIndex * (currentHeight / petalCount)) - 20 : Math.random() * 50 - 20;
+          this.y =
+            startIndex >= 0
+              ? -(startIndex * (currentHeight / petalCount)) - 20
+              : Math.random() * 50 - 20;
           this.speedX = -(Math.random() * 1.0 + 0.8);
         }
 
@@ -110,8 +110,8 @@ export default function Sakura() {
         const currentHeight = canvas?.height ?? window.innerHeight;
 
         if (
-          this.y > currentHeight + 20 || 
-          this.x > currentWidth + 40 || 
+          this.y > currentHeight + 20 ||
+          this.x > currentWidth + 40 ||
           this.x < -40
         ) {
           this.reset();
@@ -120,22 +120,38 @@ export default function Sakura() {
 
       draw() {
         if (!ctx || this.y < -this.size || this.currentOpacity <= 0) return;
-        
+
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-        
+
+        // Forme du pétale
         ctx.beginPath();
-        ctx.moveTo(0, this.size); 
-        ctx.bezierCurveTo(-this.size * 1.2, this.size * 0.4, -this.size * 0.9, -this.size * 0.7, -this.size * 0.3, -this.size);
+        ctx.moveTo(0, this.size);
+        ctx.bezierCurveTo(
+          -this.size * 1.2,
+          this.size * 0.4,
+          -this.size * 0.9,
+          -this.size * 0.7,
+          -this.size * 0.3,
+          -this.size
+        );
         ctx.lineTo(0, -this.size * 0.6);
         ctx.lineTo(this.size * 0.3, -this.size);
-        ctx.bezierCurveTo(this.size * 0.9, -this.size * 0.7, this.size * 1.2, this.size * 0.4, 0, this.size);
+        ctx.bezierCurveTo(
+          this.size * 0.9,
+          -this.size * 0.7,
+          this.size * 1.2,
+          this.size * 0.4,
+          0,
+          this.size
+        );
         ctx.closePath();
 
         ctx.fillStyle = `rgba(255, 185, 198, ${this.currentOpacity})`;
         ctx.fill();
 
+        // Nervure centrale
         ctx.beginPath();
         ctx.moveTo(0, this.size * 0.8);
         ctx.lineTo(0, -this.size * 0.2);
@@ -153,12 +169,12 @@ export default function Sakura() {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       petals.forEach((petal) => {
         petal.update();
         petal.draw();
       });
-      
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -170,7 +186,6 @@ export default function Sakura() {
     };
   }, [mounted, resolvedTheme]);
 
-  // Si le code n'est pas chargé sur le navigateur ou si on est en mode nuit, on cache tout
   if (!mounted || resolvedTheme !== "light") return null;
 
   return (

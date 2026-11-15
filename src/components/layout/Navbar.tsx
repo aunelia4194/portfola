@@ -2,23 +2,26 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import ThemeToggle from "@/src/components/ui/ThemeToggle";
 import { NAV_LINKS } from "@/src/constants/navigation";
-import ThemeToggle from "../ui/ThemeToggle";
 import { PROFILE_INFO } from "@/src/constants/profile";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { name } = PROFILE_INFO;
 
-  if (pathname === "/" || pathname === "/immersive") return null;
+  // Masque la barre de navigation sur la page d'accueil
+  if (pathname === "/") return null;
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-transparent backdrop-blur-sm border-b border-white/15 dark:border-white/5 transition-all duration-500">
+    <nav
+      aria-label="Navigation principale"
+      className="sticky top-0 z-50 w-full bg-transparent backdrop-blur-sm border-b border-white/15 dark:border-white/5 transition-all duration-500"
+    >
       <div className="flex items-center justify-between p-5 max-w-5xl mx-auto w-full">
-        
-        {/* Logo Aunélia */}
-        <Link 
-          href="/" 
+        {/* Logo */}
+        <Link
+          href="/"
           className="text-3xl font-black font-serif tracking-wide transition-opacity hover:opacity-80 drop-shadow-sm
             bg-gradient-to-r bg-clip-text text-transparent
             from-white via-sky-50 to-amber-100
@@ -26,19 +29,22 @@ export default function Navbar() {
         >
           {name}
         </Link>
-        
-        {/* Liens de navigation & Bouton Thème */}
+
+        {/* Liens et sélecteur de thème */}
         <div className="flex gap-6 sm:gap-8 items-center">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
+
             return (
-              <Link 
+              <Link
                 key={link.href}
-                href={link.href} 
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
                 className={`relative text-sm font-semibold tracking-wide transition-colors duration-200 py-1
-                  ${isActive 
-                    ? "text-white dark:text-amber-400 font-bold" 
-                    : "text-white/85 hover:text-white dark:text-slate-400 dark:hover:text-amber-300"
+                  ${
+                    isActive
+                      ? "text-white dark:text-amber-400 font-bold"
+                      : "text-white/85 hover:text-white dark:text-slate-400 dark:hover:text-amber-300"
                   }`}
               >
                 {link.label}
@@ -53,7 +59,6 @@ export default function Navbar() {
 
           <ThemeToggle />
         </div>
-
       </div>
     </nav>
   );

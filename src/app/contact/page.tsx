@@ -10,11 +10,13 @@ export default function ContactPage() {
   const {
     isSubmitting,
     isSuccess,
+    errorMessage,
     setIsSuccess,
     handleSubmit,
     emailUser,
     emailDomain,
     linkedinUrl,
+    discordUsername,
   } = useContactForm();
 
   return (
@@ -35,21 +37,21 @@ export default function ContactPage() {
             </header>
           </div>
 
-          {/* 1. Le formulaire unique dans sa boîte vitrée */}
           <div className="glass-panel rounded-3xl bg-white/5 dark:bg-slate-950/40 border border-white/20 dark:border-blue-900/40 shadow-xl backdrop-blur-md">
             <ContactForm
               onSubmit={handleSubmit}
               isSubmitting={isSubmitting}
               isSuccess={isSuccess}
+              errorMessage={errorMessage}
               onResetSuccess={() => setIsSuccess(false)}
             />
           </div>
 
-          {/* 2. Les deux petits boutons d'icônes en dessous (comme sur À propos) */}
           <ContactCards
             emailUser={emailUser}
             emailDomain={emailDomain}
             linkedinUrl={linkedinUrl}
+            discordUsername={discordUsername}
           />
         </div>
       </div>
